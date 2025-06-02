@@ -22,7 +22,7 @@ Este proyecto es una API desarrollada con FastAPI que permite gestionar producto
 ## Tecnologías Utilizadas
 
 - [FastAPI](https://fastapi.tiangolo.com/) - Framework para construir APIs.
-- [SQLite](https://www.sqlite.org/index.html) - Base de datos ligera para almacenamiento de productos.
+- [Oracle SQL](https://www.oracle.com/database/) - Base de datos para almacenamiento de productos.
 - [JavaScript](https://www.javascript.com/) - Para la lógica del lado del cliente.
 - [HTML/CSS](https://www.w3schools.com/html/) - Para la estructura y estilo de la interfaz de usuario.
 
