@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel del Vendedor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f4f4f4;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      background-color: white;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.75rem;
+    }
+
+    th {
+      background-color: #0070ba;
+      color: white;
+    }
+
+    input, select, button {
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .section {
+      margin-top: 2rem;
+    }
+
+    .btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Panel del Vendedor</h1>
+
+  <!-- CONSULTA DE STOCK -->
+  <div class="section">
+    <h2>Consultar Stock</h2>
+    <select id="producto-select"></select>
+    <p id="stock-info"></p>
+  </div>
+
+  <!-- SOLICITUD DE STOCK -->
+  <div class="section">
+    <h2>Solicitar Stock</h2>
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" id="cantidad" min="1">
+    <button class="btn" onclick="solicitarStock()">Enviar solicitud</button>
+  </div>
+
+  <!-- ESTADO DE SOLICITUDES -->
+  <div class="section">
+    <h2>Mis Solicitudes</h2>
+    <table id="solicitudes-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- VENTA Y BOLETA -->
+  <div class="section">
+    <h2>Generar Venta</h2>
+    <label>RUT Cliente:</label>
+    <input type="text" id="rutCliente">
+    <label>Email Cliente:</label>
+    <input type="email" id="emailCliente">
+    <label>ID Producto:</label>
+    <input type="number" id="idProducto">
+    <label>Descripción:</label>
+    <input type="text" id="descProd">
+    <label>Precio:</label>
+    <input type="number" id="precioTotal">
+    <button class="btn" onclick="generarBoleta()">Generar y Enviar</button>
+  </div>
+
+  <script>
+    const API = "http://localhost:3000";
+    const vendedor = "juanperez"; // Esto puede venir del login
+
+    async function cargarProductos() {
+      const res = await fetch(`${API}/productos`);
+      const data = await res.json();
+      const select = document.getElementById('producto-select');
+      select.innerHTML = '';
+      data.forEach(p => {
+        const option = document.createElement('option');
+        option.value = p.id_p;
+        option.textContent = `${p.nombre} - Stock: ${p.stock}`;
+        select.appendChild(option);
+      });
+
+      select.addEventListener('change', () => {
+        const producto = data.find(p => p.id_p == select.value);
+        document.getElementById('stock-info').textContent = `Stock disponible: ${producto.stock}`;
+      });
+    }
+
+    async function solicitarStock() {
+      const idProd = document.getElementById('producto-select').value;
+      const cantidad = document.getElementById('cantidad').value;
+
+      if (!cantidad || cantidad <= 0) {
+        alert("Cantidad inválida");
+        return;
+      }
+
+      await fetch(`${API}/solicitud/stock`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ producto: idProd, vendedor, cantidad })
+      });
+
+      alert("Solicitud enviada");
+      cargarSolicitudes();
+    }
+
+    async function cargarSolicitudes() {
+      const res = await fetch(`${API}/solicitudes?vendedor=${vendedor}`);
+      const data = await res.json();
+      const tbody = document.querySelector('#solicitudes-table tbody');
+      tbody.innerHTML = '';
+      data.forEach(sol => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${sol.id}</td>
+          <td>${sol.producto}</td>
+          <td>${sol.cantidad}</td>
+          <td>${sol.estado}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function generarBoleta() {
+      const rut = document.getElementById('rutCliente').value;
+      const email = document.getElementById('emailCliente').value;
+      const idProd = parseInt(document.getElementById('idProducto').value);
+      const desc = document.getElementById('descProd').value;
+      const precio = parseFloat(document.getElementById('precioTotal').value);
+      const fecha = new Date().toISOString().split('T')[0];
+      const hora = new Date().toLocaleTimeString();
+
+      const boleta = {
+        id_boleta: Math.floor(Math.random() * 1000000), // Puedes usar un ID real
+        rut,
+        id_produc: idProd,
+        descripcion_produc: desc,
+        fecha_vent: fecha,
+        hora_ven: hora,
+        precio_total: precio
+      };
+
+      const res = await fetch(`${API}/boleta/add`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(boleta)
+      });
+
+      if (res.ok) {
+        alert("Boleta generada");
+
+        // Enviar correo
+        await fetch(`${API}/email/enviar`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ to: email, boleta })
+        });
+
+        alert("Correo enviado al cliente ✅");
+      } else {
+        alert("Error al generar boleta");
+      }
+    }
+
+    cargarProductos();
+    cargarSolicitudes();
+    const nodemailer = require('nodemailer');
+
+app.post('/email/enviar', async (req, res) => {
+  const { to, boleta } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'tu_correo@gmail.com',
+      pass: 'tu_contraseña'
+    }
+  });
+
+  const html = `
+    <h2>Boleta de compra</h2>
+    <p>RUT: ${boleta.rut}</p>
+    <p>Producto: ${boleta.descripcion_produc}</p>
+    <p>Precio: $${boleta.precio_total}</p>
+    <p>Fecha: ${boleta.fecha_vent}</p>
+    <p>Hora: ${boleta.hora_ven}</p>
+  `;
+
+  try {
+    await transporter.sendMail({
+      from: 'tu_correo@gmail.com',
+      to,
+      subject: 'Boleta de Compra - Ferretería',
+      html
+    });
+
+    res.json({ mensaje: "Correo enviado" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+</script>
+</body>
+</html>

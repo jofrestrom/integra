@@ -1,0 +1,135 @@
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #333; /* Fondo oscuro para contraste */
+  margin: 0;
+}
+
+.container {
+  width: 250px; /* Ancho ajustado para la proporción */
+  height: 200px;
+  background-color: #d9534f; /* Rojo similar al de la imagen original */
+  position: relative;
+  overflow: hidden; /* Para que las formas no se salgan si se mueven */
+  border: 2px solid #4A0E0C; /* Borde oscuro para el contenedor */
+}
+
+/* YUNQUE */
+.anvil {
+  position: absolute;
+  bottom: 20px; /* Posición desde abajo */
+  left: 50%;
+  transform: translateX(-50%); /* Centrar el yunque */
+  width: 180px;
+  height: 100px;
+}
+
+.anvil-base {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%; /* 180px */
+  height: 25px;
+  background-color: #2c3e50; /* Azul oscuro/gris para el yunque */
+  border-radius: 3px 3px 0 0;
+}
+
+.anvil-body {
+  position: absolute;
+  bottom: 25px; /* Sobre la base */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 50px;
+  background-color: #2c3e50;
+}
+
+.anvil-horn { /* Cuerno del yunque */
+  position: absolute;
+  bottom: 45px; /* Alineado con la parte superior del cuerpo */
+  left: calc(50% - 40px - 50px); /* (centro del cuerpo) - (mitad ancho cuerpo) - (ancho cuerno) */
+  width: 60px;
+  height: 30px;
+  background-color: #2c3e50;
+  border-radius: 0 50% 50% 0 / 0 30px 30px 0; /* Simula la curva */
+  transform: rotate(5deg); /* Ligera inclinación */
+}
+
+.anvil-heel { /* Parte trasera del yunque */
+  position: absolute;
+  bottom: 50px; /* Alineado con la parte superior del cuerpo */
+  right: calc(50% - 40px - 30px); /* (centro del cuerpo) - (mitad ancho cuerpo) - (ancho talón) */
+  width: 40px;
+  height: 25px;
+  background-color: #2c3e50;
+  border-radius: 3px;
+}
+
+.anvil-face { /* Superficie plana superior */
+  position: absolute;
+  bottom: 75px; /* Encima del cuerpo */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 15px;
+  background-color: #34495e; /* Un poco más claro */
+  border-radius: 2px;
+}
+
+/* MARTILLO */
+.hammer {
+  position: absolute;
+  top: 10px;
+  left: 150px; /* Ajusta para la posición deseada */
+  width: 120px; /* Ancho total del martillo (cabeza + parte del mango) */
+  height: 80px; /* Alto total (cabeza + parte del mango) */
+  transform: rotate(-30deg); /* Rotación del martillo */
+}
+
+.hammer-head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 30px;
+  background-color: #bdc3c7; /* Gris claro para la cabeza del martillo */
+  border-radius: 3px;
+}
+
+.hammer-head::before { /* Parte de la peña del martillo */
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: -20px; /* Extender hacia la izquierda */
+  width: 25px;
+  height: 20px;
+  background-color: #bdc3c7;
+  border-radius: 3px 8px 8px 3px; /* Redondear un extremo */
+}
+
+.hammer-head::after { /* Parte de la cara del martillo */
+  content: '';
+  position: absolute;
+  top: 2.5px;
+  right: -15px; /* Extender hacia la derecha */
+  width: 20px;
+  height: 25px;
+  background-color: #bdc3c7;
+  border-radius: 2px;
+}
+
+
+.hammer-handle {
+  position: absolute;
+  top: 10px; /* Solapado con la cabeza */
+  left: 20px; /* Centrado bajo la cabeza */
+  width: 15px;
+  height: 70px;
+  background-color: #8a6d3b; /* Marrón para el mango */
+  border-radius: 3px;
+  z-index: -1; /* Detrás de la cabeza del martillo */
+}

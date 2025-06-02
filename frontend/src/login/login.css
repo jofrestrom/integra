@@ -1,0 +1,155 @@
+* {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #606060, #2f2f2f);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Contenedor del formulario */
+  .login-container {
+    background: linear-gradient(145deg, #c0c0c0, #858585);
+    padding: 2.5rem 3rem;
+    border-radius: 16px;
+    box-shadow:
+      inset 0 0 15px #d9d9d9,
+      0 8px 20px rgba(0,0,0,0.7);
+    width: 90%;
+    max-width: 400px;
+    border: 3px solid #a5a5a5;
+    color: #222;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Brillo metálico animado */
+  .login-container::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+      linear-gradient(
+        45deg,
+        rgba(255,255,255,0.25) 0%,
+        rgba(255,255,255,0) 60%
+      );
+    transform: rotate(25deg);
+    animation: shine 3s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes shine {
+    from { transform: rotate(25deg) translateX(-200%); }
+    to { transform: rotate(25deg) translateX(200%); }
+  }
+
+  h2 {
+    margin-bottom: 2rem;
+    color: #1a1a1a;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 2px;
+    font-weight: 900;
+    font-size: 2rem;
+    text-shadow: 1px 1px 2px #fff, -1px -1px 2px #000;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-weight: 700;
+    color: #333;
+    font-family: 'Courier New', Courier, monospace;
+    text-shadow: 0.4px 0.4px 0 #eee;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.7rem;
+    border: 2px solid #777;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(145deg, #e1e1e1, #b1b1b1);
+    box-shadow:
+      inset 2px 2px 4px #f7f7f7,
+      inset -2px -2px 4px #9a9a9a;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    color: #232323;
+  }
+
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    border-color: #d0d0d0;
+    background: linear-gradient(145deg, #fff, #d0d0d0);
+    outline: none;
+    box-shadow:
+      0 0 8px #ffffff,
+      inset 2px 2px 6px #f7f7f7,
+      inset -2px -2px 6px #9a9a9a;
+    color: #000;
+  }
+
+  button {
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1.15rem;
+    background: linear-gradient(135deg, #999999, #565656);
+    color: #f0f0f0;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 900;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    box-shadow:
+      0 5px 0 #3a3a3a,
+      inset 0 -3px 8px rgba(255,255,255,0.3);
+    transition: background 0.3s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button:hover {
+    background: linear-gradient(135deg, #bbbbbb, #7a7a7a);
+    box-shadow:
+      0 3px 0 #2a2a2a,
+      inset 0 -4px 10px rgba(255,255,255,0.5);
+  }
+
+  button:active {
+    box-shadow:
+      0 1px 0 #202020,
+      inset 0 -1px 3px rgba(255,255,255,0.7);
+    transform: translateY(2px);
+  }
+
+  /* Adaptar al móvil */
+  @media (max-width: 450px) {
+    .login-container {
+      padding: 2rem 1.5rem;
+      border-radius: 12px;
+      border-width: 2px;
+    }
+    h2 {
+      font-size: 1.6rem;
+    }
+    input[type="email"],
+    input[type="password"],
+    button {
+      font-size: 1rem;
+      padding: 0.7rem 0.9rem;
+    }
+  }

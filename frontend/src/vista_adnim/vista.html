@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Administrar Usuarios</title>
+  <style>
+    body { font-family: Arial; padding: 2rem; background-color: #f9f9f9; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: #fff; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+    th { background-color: #0070ba; color: white; }
+    input, select, button { margin: 0.25rem; padding: 0.4rem; }
+    .actions button { margin-right: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h2>Administrar Usuarios</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>RUT</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Tipo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="usuarios-body"></tbody>
+  </table>
+
+  <script>
+    const API = "http://localhost:3000";
+
+    async function cargarUsuarios() {
+      const res = await fetch(`${API}/usuarios`);
+      const data = await res.json();
+      const tbody = document.getElementById('usuarios-body');
+      tbody.innerHTML = '';
+      data.forEach(user => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${user.rut}</td>
+          <td><input value="${user.nombre}" onchange="actualizarCampo('${user.rut}', 'nombre', this.value)"></td>
+          <td><input value="${user.email}" onchange="actualizarCampo('${user.rut}', 'email', this.value)"></td>
+          <td>
+            <select onchange="actualizarCampo('${user.rut}', 'tipo', this.value)">
+              <option value="cliente" ${user.tipo === 'cliente' ? 'selected' : ''}>Cliente</option>
+              <option value="vendedor" ${user.tipo === 'vendedor' ? 'selected' : ''}>Vendedor</option>
+              <option value="admin" ${user.tipo === 'admin' ? 'selected' : ''}>Administrador</option>
+            </select>
+          </td>
+          <td class="actions">
+            <button onclick="eliminarUsuario('${user.rut}')">🗑️ Eliminar</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function actualizarCampo(rut, campo, valor) {
+      await fetch(`${API}/usuarios/update/${rut}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ campo, valor })
+      });
+      alert("Campo actualizado");
+    }
+
+    async function eliminarUsuario(rut) {
+      if (!confirm("¿Seguro de eliminar este usuario?")) return;
+      await fetch(`${API}/usuarios/delete/${rut}`, { method: 'DELETE' });
+      cargarUsuarios();
+    }
+
+    cargarUsuarios();
+  </script>
+</body>
+</html>

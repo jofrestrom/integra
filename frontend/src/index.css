@@ -1,0 +1,252 @@
+* {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #606060, #2f2f2f);
+            color: #222;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Contenedor del catálogo */
+        .catalog-container {
+            width: 100%;
+            max-width: 1100px;
+            background: linear-gradient(145deg, #c0c0c0, #858585);
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: inset 0 0 15px #d9d9d9, 0 8px 20px rgba(0, 0, 0, 0.7);
+            border: 3px solid #a5a5a5;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Estilos de encabezado */
+        h1 {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #111;
+            text-shadow: 1px 1px 2px #fff, -1px -1px 2px #000;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Estilos de la cuadrícula de productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Estilos de las tarjetas de productos */
+        .product-card {
+            background: linear-gradient(145deg, #e1e1e1, #b1b1b1);
+            border-radius: 16px;
+            box-shadow: inset 2px 2px 7px #fafafa, inset -2px -2px 7px #9a9a9a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 1rem;
+            color: #222;
+            transition: background 0.3s ease, transform 0.3s ease;
+            cursor: default;
+        }
+
+        .product-card:hover {
+            background: linear-gradient(145deg, #fff, #d0d0d0);
+            transform: translateY(-6px);
+        }
+
+        /* Estilos de los botones */
+        .cartBtn {
+            width: 165px;
+            height: 50px;
+            border: none;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            color: white;
+            font-weight: 500;
+            position: relative;
+            background-color: rgb(29, 29, 29);
+            box-shadow: 0 20px 30px -7px rgba(27, 27, 27, 0.219);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        /* Estilos del carrusel */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 1rem 0;
+        }
+
+        .carousel::-webkit-scrollbar {
+            display: none; /* Ocultar scrollbar en navegadores WebKit */
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(59, 130, 246, 0.8);
+            border: none;
+            color: white;
+            padding: 0.5rem 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            user-select: none;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background-color: rgba(37, 99, 235, 0.9);
+        }
+
+        .carousel-btn-left {
+            left: 10px;
+        }
+
+        .carousel-btn-right {
+            right: 10px;
+        }
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(59, 130, 246, 0.8);
+  border: none;
+  color: white;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background-color: rgba(37, 99, 235, 0.9);
+}
+
+.carousel-btn-left {
+  left: -20px;
+}
+
+.carousel-btn-right {
+  right: -20px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
+  margin: 2rem;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.carousel-container {
+  position: relative;
+}
+
+.carousel {
+  display: flex;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.product-card {
+  flex: 0 0 220px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-right: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  color: #2563eb;
+  margin: 0.5rem 0 0.3rem;
+}
+
+.product-desc {
+  font-size: 0.9rem;
+  color: #555;
+  height: 48px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-price {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: #059669;
+}
+
+.search-container{
+  text-align: right;
+}
+
+.section-title_M {
+  font-size: 1.5rem;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

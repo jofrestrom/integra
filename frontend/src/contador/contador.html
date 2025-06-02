@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel del Contador</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f2f2f2;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background-color: white;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #0070ba;
+      color: white;
+    }
+
+    .export-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 0.6rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Reporte de Ganancias Mensuales</h1>
+
+  <table id="ventas-table">
+    <thead>
+      <tr>
+        <th>Mes</th>
+        <th>Ganancia Total</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button class="export-btn" onclick="exportarExcel()">📁 Exportar a Excel</button>
+
+  <script>
+    const API = "http://localhost:3000";
+
+    async function cargarVentasMensuales() {
+      const res = await fetch(`${API}/ventas/por-mes`);
+      const data = await res.json();
+
+      const tbody = document.querySelector('#ventas-table tbody');
+      tbody.innerHTML = '';
+      data.forEach(reg => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${reg.mes}</td><td>$${reg.total}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function exportarExcel() {
+      const tabla = document.getElementById('ventas-table');
+      const wb = XLSX.utils.table_to_book(tabla, { sheet: "Ganancias" });
+      XLSX.writeFile(wb, "reporte_ganancias.xlsx");
+    }
+
+    cargarVentasMensuales();
+  </script>
+</body>
+</html>

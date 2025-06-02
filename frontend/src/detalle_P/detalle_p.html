@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detalle del Producto</title>
+  <link rel="stylesheet" href="detalle.css">
+  <script src="detalle.js"></script>
+</head>
+
+<body>
+  <div class="product-detail">
+    <h1>Detalle del Producto</h1>
+    <div class="product-image">
+      <img id="product-image" src="" alt="Imagen del producto" />
+    </div>
+    <div class="product-row"><span class="label">Nombre:</span> <span id="nombre"></span></div>
+    <div class="product-row"><span class="label">Marca:</span> <span id="marca"></span></div>
+    <div class="product-row"><span class="label">Descripción:</span> <span id="descripcion"></span></div>
+    <div class="product-row"><span class="label">Tipo:</span> <span id="tipo"></span></div>
+    <div class="product-row"><span class="label">Stock:</span> <span id="stock"></span></div>
+    <div class="product-row"><span class="label">Precio:</span> <span id="precio"></span></div>
+    <div class="product-row">
+      <label for="cantidad" class="label">Cantidad:</label>
+      <input type="number" id="cantidad" min="1" value="1" />
+    </div>
+    <!-- From Uiverse.io by vinodjangid07 -->
+    <button class="cartBtn" id="addCartBtn">
+      <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+        </path>
+      </svg>
+      ADD TO CART
+      <!-- Icono de caja de herramientas -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="product" height="1em" viewBox="0 0 512 512" fill="white">
+        <path
+          d="M502.6 182.6 480 160V96c0-17.7-14.3-32-32-32h-96V32c0-17.7-14.3-32-32-32H192c-17.7 0-32 14.3-32 32v32H64c-17.7 0-32 14.3-32 32v64L9.4 182.6C3.4 188.6 0 196.9 0 205.5V320c0 17.7 14.3 32 32 32v96c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32v-96c17.7 0 32-14.3 32-32V205.5c0-8.5-3.4-16.8-9.4-22.9zM208 48h96v48h-96V48zm240 400H64v-96h384v96zm32-128H32v-97.5l22.6-22.6L80 160v32h352v-32l25.4 25.4 22.6 22.6V320z" />
+      </svg>
+    </button>
+
+
+    <div style="margin-top:1rem;">
+      <a href="../carrito/carrito.html">Ver Carrito</a>
+    </div>
+  </div>
+</body>
+
+</html>

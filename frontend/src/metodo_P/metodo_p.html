@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Método de Pago</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .payment-options {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .option {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .option h2 {
+      margin-top: 0;
+    }
+
+    .bank-details {
+      display: none;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button.show-transfer {
+      margin-top: 1rem;
+      background-color: #0070ba;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .price {
+      font-weight: bold;
+      color: green;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Selecciona tu método de pago</h1>
+
+  <div class="payment-options">
+
+    <!-- Opción 1: Pago con tarjeta vía PayPal -->
+    <div class="option">
+      <h2>Pagar con Tarjeta (vía PayPal)</h2>
+      <p class="price" id="paypal-price">Precio: $--</p>
+      <div id="paypal-button-container"></div>
+    </div>
+
+    <!-- Opción 2: Transferencia bancaria -->
+    <div class="option">
+      <h2>Transferencia Bancaria</h2>
+      <p>Si prefieres pagar mediante transferencia, haz clic abajo para ver los datos.</p>
+      <button class="show-transfer" onclick="toggleBankDetails()">Ver datos de transferencia</button>
+      <div class="bank-details" id="bank-details">
+        <p><strong>Banco:</strong> Banco Ejemplo</p>
+        <p><strong>Cuenta:</strong> 123456789</p>
+        <p><strong>CLABE:</strong> 012345678901234567</p>
+        <p><strong>Titular:</strong> Nombre de la empresa</p>
+        <p><strong>Monto a pagar:</strong> <span id="transfer-price">$--</span></p>
+        <p><strong>Referencia:</strong> Tu número de pedido</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SDK de PayPal -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&components=buttons,funding-eligibility&currency=USD"></script>
+
+  <!-- Script principal -->
+  <script>
+    const precio = localStorage.getItem('precio_final') || '0.00';
+
+    // Mostrar precio
+    document.getElementById('paypal-price').textContent = `Precio: $${precio}`;
+    document.getElementById('transfer-price').textContent = `$${precio}`;
+
+    // Botón de pago con PayPal
+    paypal.Buttons({
+      style: {
+        layout: 'vertical',
+        color: 'blue',
+        shape: 'pill',
+        label: 'paypal'
+      },
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: precio
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert('Pago completado por ' + details.payer.name.given_name + ' ✅');
+        });
+      }
+    }).render('#paypal-button-container');
+
+    // Mostrar/Ocultar datos bancarios
+    function toggleBankDetails() {
+      const details = document.getElementById('bank-details');
+      details.style.display = details.style.display === 'none' || details.style.display === '' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
